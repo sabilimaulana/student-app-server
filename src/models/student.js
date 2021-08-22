@@ -10,6 +10,11 @@ const studentSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    studyProgram: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "StudyProgram",
+      required: true
+    },
   },
   { timestamps: true }
 );
