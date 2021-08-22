@@ -2,7 +2,9 @@ const Student = require("../../models/student");
 
 exports.getStudents = async (req, res) => {
   try {
-    const students = await Student.find().populate("studyProgram");
+    const students = await Student.find()
+      .populate({ path: "studyProgram", select: ["name"] })
+      .populate({ path: "subject", select: ["name"] });
 
     return res.status(200).json({
       status: "Success",
@@ -21,7 +23,9 @@ exports.getStudent = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const student = await Student.findById(id);
+    const student = await Student.findById(id)
+      .populate({ path: "studyProgram", select: ["name"] })
+      .populate({ path: "subject", select: ["name"] });
 
     return res.status(200).json({
       status: "Success",
@@ -38,12 +42,15 @@ exports.getStudent = async (req, res) => {
 
 exports.addStudent = async (req, res) => {
   try {
-    const { name, email, studyProgram } = req.body;
+    const { name, email, studyProgram, subject } = req.body;
+
+    console.log(subject);
 
     const newStudentModel = new Student({
       name,
       email,
       studyProgram,
+      subject,
     });
 
     const newStudent = await newStudentModel.save();
@@ -94,13 +101,13 @@ exports.deleteStudent = async (req, res) => {
 
 exports.updateStudent = async (req, res) => {
   try {
-    const { name, email, studyProgram } = req.body;
+    const { name, email, studyProgram, subject } = req.body;
     const { id } = req.params;
 
     // console.log(name, email, studyProgram);
 
     const updatedStudent = await Student.findByIdAndUpdate(id, {
-      $set: { name, email, studyProgram },
+      $set: { name, email, studyProgram, subject },
     });
 
     if (!updatedStudent) {

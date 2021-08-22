@@ -8,6 +8,7 @@ const cors = require("cors");
 // routes
 const student = require("./routes/student");
 const studyProgram = require("./routes/studyProgram");
+const subject = require("./routes/subject");
 
 require("dotenv").config();
 
@@ -16,6 +17,7 @@ app.use(cors());
 
 app.use("/api/v1", student);
 app.use("/api/v1", studyProgram);
+app.use("/api/v1", subject);
 
 app.use("/", (req, res) => {
   res.send("Node Js x MongoDB");

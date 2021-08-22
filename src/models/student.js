@@ -13,8 +13,9 @@ const studentSchema = mongoose.Schema(
     studyProgram: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "StudyProgram",
-      required: true
+      required: true,
     },
+    subject: [{ type: mongoose.Schema.Types.ObjectId, ref: "Subject" }],
   },
   { timestamps: true }
 );
